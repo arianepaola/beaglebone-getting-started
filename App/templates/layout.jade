@@ -1,0 +1,11 @@
+doctype html
+html
+   include ./includes/head.jade
+   body
+      .cover.hidden-sm
+         include ./includes/navbar
+         .cover-image(style="background-image: url('../../images/background.jpg')")
+         .container
+            .row
+               .col-md-12.text-center
+                  block content

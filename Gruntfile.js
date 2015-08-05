@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
         nodewebkit: {
             options: {
-                version: '0.12.2',
+                version: '0.12.3',
                 buildDir: './build',
                 macIcns: './App/beaglebone-getting-started.icns',
                 platforms: ['win', 'osx', 'linux'] // builds both 32 and 64 bit versions
@@ -48,11 +48,11 @@ module.exports = function(grunt) {
                 dest:'App/js/libs/jquery.min.js'
             },
             "bootstrap-js": {
-                url:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js',
+                url:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
                 dest:'App/js/libs/bootstrap.min.js'
             },
             "font-awesome": {
-                url:'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css',
+                url:'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
                 dest:'App/css/libs/font-awesome.min.css'
             },
             "bootstrap-pingendo-theme": {

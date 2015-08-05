@@ -12,6 +12,7 @@ var menubar = new gui.Menu({
 var start = new gui.Menu();
 var connect = new gui.Menu();
 var about = new gui.Menu();
+var firmware = new gui.Menu();
 
 start.append(new gui.MenuItem({
     label: 'Start',
@@ -41,6 +42,20 @@ connect.append(new gui.MenuItem({
     }
 }));
 
+connect.append(new gui.MenuItem({
+    label: 'Cloud9 IDE',
+    click: function() {
+        gui.Window.open("http://192.168.7.2:3000/");
+    }
+}));
+
+firmware.append(new gui.MenuItem({
+    label: 'Download Firmware Images',
+    click: function() {
+        window.location.replace(appPath + '/html/en/download_firmware.html');
+    }
+}));
+
 about.append(new gui.MenuItem({
     label: 'Open Documentation',
     click: function() {
@@ -64,6 +79,7 @@ about.append(new gui.MenuItem({
 
 menubar.append(new gui.MenuItem({label: 'Start', submenu: start}));
 menubar.append(new gui.MenuItem({label: 'Connect', submenu: connect}));
+menubar.append(new gui.MenuItem({label: 'Firmware update', submenu: firmware}));
 menubar.append(new gui.MenuItem({label: 'Help', submenu: about}));
 
 win.menu = menubar;

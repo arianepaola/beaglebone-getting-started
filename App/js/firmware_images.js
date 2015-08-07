@@ -4,6 +4,7 @@ var fs = require('fs');
 var url = require("url");
 var path = require("path");
 var crypto = require('crypto');
+var lzma = require('lzma');
 
 var updatePercentage = function(value) {
     $("div[role='progressbar']").css("width", value + "%");
@@ -13,10 +14,11 @@ var updatePercentage = function(value) {
 var download = function(url, destination, callback) {
     var file = fs.createWriteStream(destination);
     var length = 0;
-
     var lastPercentage = 0;
+    // http.get does not support https downloads
+    var firmwareURL = url.replace(/^https:\/\//i, 'http://');
 
-    var request = http.get(url, function(response) {
+    var request = http.get(firmwareURL, function(response) {
         response.pipe(file);
         var contentLength = response.headers['content-length'];
 

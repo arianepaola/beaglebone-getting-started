@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         jsSources: appSources.slice().concat('Gruntfile.js'),
         jsTests: ['test/**/*.js'],
 
-        nodewebkit: {
+        nwjs: {
             options: {
                 version: '0.12.3',
                 buildDir: './build',
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                         src: ['**/*.jade'],
                         dest: 'App/html',
                         ext: '.html'
-                    },
+                    }
                 ]
             }
         },
@@ -97,7 +97,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-node-webkit-builder');
+    grunt.loadNpmTasks('grunt-nw-builder');
     grunt.loadNpmTasks('grunt-jade-i18n');
     grunt.loadNpmTasks('grunt-remotefile');
     grunt.loadNpmTasks('grunt-mocha-test');
@@ -107,8 +107,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('getdependencies', ['remotefile']);
     grunt.registerTask('make_html', ['jade']);
-    grunt.registerTask('make_package', ['nodewebkit']);
-    grunt.registerTask('build', ['remotefile', 'jade', 'nodewebkit']);
+    grunt.registerTask('make_package', ['nwjs']);
+    grunt.registerTask('build', ['remotefile', 'jade', 'nwjs']);
     grunt.registerTask('test', ['mochaTest', 'jshint', 'jscs', 'mocha_istanbul:coverage']);
 
 };

@@ -4,7 +4,19 @@ var fs = require('fs');
 var url = require("url");
 var path = require("path");
 var crypto = require('crypto');
-var lzma = require('lzma');
+var xz = require('xz');
+var isXz = require('is-xz');
+
+var extractImage = function(imageFile, destination) {
+    if(isXz(fs.readFileSync(imageFile))) {
+        var outputFile = path.join(destination, imageFile.slice(0, -4));
+        var decompression = new xz.Decompressor();
+        var input = fs.createReadStream(imageFile);
+        var output = fs.createWriteStream(outputFile);
+
+        input.pipe(decompression).pipe(output);
+    }
+};
 
 var updatePercentage = function(value) {
     $("div[role='progressbar']").css("width", value + "%");

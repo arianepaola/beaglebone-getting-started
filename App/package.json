@@ -43,6 +43,7 @@
     "ssh2": "~0.4.10",
     "term.js": "~0.0.5",
     "scp2": "~0.2.2",
-    "xz": "git+https://github.com/pgbross/node-xz.git#nanupdates"
+    "xz": "git+https://github.com/pgbross/node-xz.git#nanupdates",
+    "is-xz": "~1.0.0"
   }
 }

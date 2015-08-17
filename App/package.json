@@ -44,6 +44,8 @@
     "term.js": "~0.0.5",
     "scp2": "~0.2.2",
     "xz": "git+https://github.com/pgbross/node-xz.git#nanupdates",
-    "is-xz": "~1.0.0"
+    "is-xz": "~1.0.0",
+    "sudo": "~1.0.3",
+    "windosu": "~0.1.3"
   }
 }

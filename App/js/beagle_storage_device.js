@@ -1,4 +1,8 @@
 var spawn = require('child_process').spawnSync;
+var os = require('os');
+var sudo = require('sudo');
+var windosu = require('windosu');
+var tempWrite = require('tempwrite');
 
 var command_line = function(command, arguments) {
     var command_output = spawn(command, arguments);
@@ -53,4 +57,73 @@ var detectDeviceMacOS = function() {
 
 var detectDeviceWindows = function() {
 
+    var wmic_output = command_line('wmic', ['diskdrive', 'list']);
+    var dd_output = command_line('dd.exe', ['--list']);
+
+    var reWmic = /[\s\S]*?Linux File-CD Gadget USB Device\s+(.*)\s+USBSTOR/gm;
+    var reDd = /[\s\S]*?Volume\{(.*)\}\\\s+.*\s+removeable media\s+Mounted on\s+(\\.*)\s+/gm;
+
+    var resultWmic = reWmic.exec(wmic_output);
+    var resultDd = reDd.exec(dd_output);
+
+    if(resultWmic[1] != null && resultDd[1] != null) {
+        return resultWmic[1];
+    }
+
+    return null;
+
+};
+
+var umount = function(device, password) {
+    // Linux
+    if(os.type().substring(0,4) == 'Linux') {
+        umountLinux(device, password);
+    }
+
+    // MacOS
+    else if(os.type().substring(0,5) == 'Darwin') {
+        umountMacOS(device, password);
+    }
+
+    // Windows
+    else if(os.type().substring(0,6) == 'Windows') {
+        umountWindows(device, password);
+    }
+
+    else {
+    }
+};
+
+var umountLinux = function(device, password) {
+    var options = {cachePassword: false, password: password};
+
+    // sudo umount /dev/sdX
+    var child = sudo([ 'umount', device], options);
+    child.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+};
+
+var umountMacOS = function(device, password) {
+    var options = {cachePassword: false, password: password};
+
+    // sudo diskutil unmount /dev/diskX
+    var child = sudo([ 'diskutil', 'umount', device], options);
+    child.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+};
+
+var umountWindows = function(device, password) {
+    // write diskpart command script
+    var filepath = tempWrite.sync('diskpart_script.txt');
+
+    tempWrite.sync('list volume');
+
+    windosu.exec('diskpart /s ' + fs.readFileSync(filepath, 'utf8'));
+
+    var umountScript = tempWrite.sync('diskpart_umount.txt');
+    tempWrite.sync('list volume\r\nselect volume 3\r\nremove all dismount\r\nexit');
+
+    windosu.exec('diskpart /s ' + fs.readFileSync(umountScript, 'utf8'));
 };

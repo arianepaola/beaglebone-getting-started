@@ -56,6 +56,20 @@ firmware.append(new gui.MenuItem({
     }
 }));
 
+firmware.append(new gui.MenuItem({
+    label: 'Flash Firmware',
+    click: function() {
+        window.location.replace(appPath + '/html/en/flash_firmware.html');
+    }
+}));
+
+firmware.append(new gui.MenuItem({
+    label: 'Flash eMMC',
+    click: function() {
+        window.location.replace(appPath + '/html/en/flash_emmc.html');
+    }
+}));
+
 about.append(new gui.MenuItem({
     label: 'Open Documentation',
     click: function() {

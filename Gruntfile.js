@@ -61,6 +61,27 @@ module.exports = function(grunt) {
             }
         },
 
+        shell: {
+        	gitCloneBBBlfs: {
+        		command: ['rm -rf BBBlfs',
+                          'git clone --depth=1 https://github.com/ungureanuvladvictor/BBBlfs.git',
+                        ].join('&&')
+        	},
+        	buildBBBlfs: {
+        		command: ['cd BBBlfs',
+                          './autogen.sh',
+                          './configure',
+                          'make -I BBBlfs',
+                          'cd ..'
+        		].join('&&')
+        	},
+        	moveBBBlfs: {
+        		command: ['rm -rf App/BBBlfs',
+                          'mv BBBlfs/bin App/BBBlfs'
+                ].join('&&')
+        	}
+        },
+
         mochaTest: {
             test: {
                 options: {
@@ -100,6 +121,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-nw-builder');
     grunt.loadNpmTasks('grunt-jade-i18n');
     grunt.loadNpmTasks('grunt-remotefile');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-mocha-istanbul');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -108,7 +130,7 @@ module.exports = function(grunt) {
     grunt.registerTask('getdependencies', ['remotefile']);
     grunt.registerTask('make_html', ['jade']);
     grunt.registerTask('make_package', ['nwjs']);
-    grunt.registerTask('build', ['remotefile', 'jade', 'nwjs']);
+    grunt.registerTask('build', ['shell:gitCloneBBBlfs', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
     grunt.registerTask('test', ['mochaTest', 'jshint', 'jscs', 'mocha_istanbul:coverage']);
 
 };

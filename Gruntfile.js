@@ -62,24 +62,45 @@ module.exports = function(grunt) {
         },
 
         shell: {
-        	gitCloneBBBlfs: {
+        	gitCloneBBBlfsLinux: {
         		command: ['rm -rf BBBlfs',
-                          'git clone --depth=1 https://github.com/ungureanuvladvictor/BBBlfs.git',
+                          'git clone --depth=1 https://github.com/ungureanuvladvictor/BBBlfs.git'
                         ].join('&&')
         	},
+            gitCloneBBBlfsMacOS: {
+                command: ['rm -rf BBBlfs',
+                    'git clone --depth=1 --branch osx https://github.com/ungureanuvladvictor/BBBlfs.git'
+                ].join('&&')
+            },
+            gitCloneBBBlfsWindows: {
+                command: ['rmdir BBBlfs /s /q',
+                    'git clone --depth=1 --branch windows-partial https://github.com/ungureanuvladvictor/BBBlfs.git'
+                ].join('&&')
+            },
         	buildBBBlfs: {
         		command: ['cd BBBlfs',
                           './autogen.sh',
                           './configure',
-                          'make -I BBBlfs',
+                          'make',
                           'cd ..'
         		].join('&&')
         	},
+            buildBBBlfsWindows: {
+                command: ['cd BBBlfs',
+                    'msbuild.exe BBBlfs.sln',
+                    'cd ..'
+                ].join('&&')
+            },
         	moveBBBlfs: {
         		command: ['rm -rf App/BBBlfs',
                           'mv BBBlfs/bin App/BBBlfs'
                 ].join('&&')
-        	}
+        	},
+            moveBBBlfsWindows: {
+                command: ['rmdir App/BBBlfs /s /q',
+                    'mv BBBlfs/bin App/BBBlfs'
+                ].join('&&')
+            }
         },
 
         mochaTest: {
@@ -130,7 +151,19 @@ module.exports = function(grunt) {
     grunt.registerTask('getdependencies', ['remotefile']);
     grunt.registerTask('make_html', ['jade']);
     grunt.registerTask('make_package', ['nwjs']);
-    grunt.registerTask('build', ['shell:gitCloneBBBlfs', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
+
+    if(/linux/.test(process.platform)) {
+        grunt.registerTask('build', ['shell:gitCloneBBBlfs', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
+    }
+    else if(/windows/.test(process.platform)) {
+        grunt.registerTask('build', ['shell:gitCloneBBBlfsWindows', 'shell:buildBBBlfsWindows', 'shell:moveBBBlfsWindows', 'remotefile', 'jade', 'nwjs']);
+    }
+    else if(/darwin/.test(process.platform)) {
+        grunt.registerTask('build', ['shell:gitCloneBBBlfsMacOS', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
+    }
+    else {
+    }
+
     grunt.registerTask('test', ['mochaTest', 'jshint', 'jscs', 'mocha_istanbul:coverage']);
 
 };

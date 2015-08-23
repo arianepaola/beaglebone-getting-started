@@ -45,7 +45,7 @@ connect.append(new gui.MenuItem({
 connect.append(new gui.MenuItem({
     label: 'Cloud9 IDE',
     click: function() {
-        gui.Window.open("http://192.168.7.2:3000/");
+        window.location.replace("http://192.168.7.2:3000/");
     }
 }));
 

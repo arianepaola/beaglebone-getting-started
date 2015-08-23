@@ -153,7 +153,7 @@ module.exports = function(grunt) {
     grunt.registerTask('make_package', ['nwjs']);
 
     if(/linux/.test(process.platform)) {
-        grunt.registerTask('build', ['shell:gitCloneBBBlfs', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
+        grunt.registerTask('build', ['shell:gitCloneBBBlfsLinux', 'shell:buildBBBlfs', 'shell:moveBBBlfs', 'remotefile', 'jade', 'nwjs']);
     }
     else if(/windows/.test(process.platform)) {
         grunt.registerTask('build', ['shell:gitCloneBBBlfsWindows', 'shell:buildBBBlfsWindows', 'shell:moveBBBlfsWindows', 'remotefile', 'jade', 'nwjs']);

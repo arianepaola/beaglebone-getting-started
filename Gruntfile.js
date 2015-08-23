@@ -1,3 +1,11 @@
+/*
+ * BeagleBone Getting Started Application
+ * https://github.com/arianepaola/beaglebone-getting-started/tree/nwjs
+ *
+ * Copyright (c) 2015 Ariane Paola Gomes
+ * Licensed under the MIT license.
+ */
+
 module.exports = function(grunt) {
 
     var appSources = ['App/*.js', 'test/**/*.js'];
@@ -43,21 +51,29 @@ module.exports = function(grunt) {
         },
 
         remotefile: {
-            "jquery": {
-                url:'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-                dest:'App/js/libs/jquery.min.js'
+            'jquery': {
+                url: 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js',
+                dest: 'App/js/libs/jquery.min.js'
             },
-            "bootstrap-js": {
-                url:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
-                dest:'App/js/libs/bootstrap.min.js'
+            'bootstrap-js': {
+                url: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
+                dest: 'App/js/libs/bootstrap.min.js'
             },
-            "font-awesome": {
-                url:'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
-                dest:'App/css/libs/font-awesome.min.css'
+            'font-awesome': {
+                url: 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
+                dest: 'App/css/libs/font-awesome.min.css'
             },
-            "bootstrap-pingendo-theme": {
-                url:'http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css',
-                dest:'App/css/libs/bootstrap.css'
+            'bootstrap-pingendo-theme': {
+                url: 'http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css',
+                dest: 'App/css/libs/bootstrap.css'
+            },
+            'bootstrap-pingendo-theme': {
+                url: 'http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css',
+                dest: 'App/css/libs/bootstrap.css'
+            },
+            'dd-for-windows': {
+                url: 'http://www.chrysocome.net/downloads/dd-0.6beta3.zip',
+                dest: 'App/dd-for-windows.zip'
             }
         },
 
@@ -134,7 +150,7 @@ module.exports = function(grunt) {
         jscs: {
             src: '<%= jsSources %>',
             options: {
-                config: ".jscsrc"
+                config: '.jscsrc'
             }
         }
     });
